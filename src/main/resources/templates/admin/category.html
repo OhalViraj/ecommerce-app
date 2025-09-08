@@ -64,29 +64,31 @@
 					<div class="card card-sh">
 						<div class="card-header text-center fs-4">View Category</div>
 						<div class="card-body">
-							<form action="">
-
+							
 								<table class="table">
 									<thead>
 										<tr>
 											<th scope="col">SL NO</th>
 											<th scope="col">Category</th>
+											<th scope="col">Status</th>
 											<th scope="col">Images</th>
 											<th scope="col">Action</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<th scope="row">1</th>
-											<td>Mark</td>
-											<td>Otto</td>
-											<td>@mdo</td>
+										<tr th:each="cat,c:${categorys}">
+											<th scope="row">[[${c.count}]]</th>
+											<td>[[${cat.name}]]</td>
+											<td>[[${cat.isActive}]]</td>
+											<td> <img alt="error" th:src="@{'/img/category_img/'+${cat.imageName}}" width="100px" height="80px" > </td>
+											<td>
+											<a th:href="@{'/admin/loadEditCategory/'+${cat.id}}" class="btn btn-sm btn-success text-center"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
+											<a th:href="@{'/admin/deleteCategory/'+${cat.id}}" class="btn btn-sm btn-danger text-center"> <i class="fa-solid fa-trash"></i> Delete</a>
+											</td>
 										</tr>
 
 									</tbody>
 								</table>
-
-							</form>
 
 						</div>
 

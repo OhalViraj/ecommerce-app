@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import com.demo.model.Category;
 import com.demo.repository.CategoryRepo;
@@ -35,5 +36,29 @@ public class CategoryServiceImpl implements CategoryService{
 		
 		return categoryRepo.existsByName(name);
 	}
+
+	@Override
+	public Boolean deleteCategory(int id) {
+		// TODO Auto-generated method stub
+		Category category=categoryRepo.findById(id).orElse(null);
+		
+		if(!ObjectUtils.isEmpty(category))
+		{
+			categoryRepo.delete(category);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public Category getCategoryById(int id) {
+		// TODO Auto-generated method stub
+		
+		Category category = categoryRepo.findById(id).orElse(null);
+		return category;
+	}
+	
+	
+	
 
 }
