@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.demo.model.Category;
 import com.demo.model.Product;
+import com.demo.repository.ProductRepo;
 import com.demo.service.CategoryService;
 import com.demo.service.ProductService;
 
@@ -32,11 +33,17 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/admin")
 public class AdminController {
 
+    private final ProductRepo productRepo;
+
 	@Autowired
 	private CategoryService categoryService;
 	
 	@Autowired
 	private ProductService productService;
+
+    AdminController(ProductRepo productRepo) {
+        this.productRepo = productRepo;
+    }
 	
 	@GetMapping("/")
 	public String indexPage()
@@ -179,5 +186,28 @@ public class AdminController {
 		}
 		
 		return "redirect:/admin/loadAddProduct";
+	}
+	
+	@GetMapping("/products")
+	public String loadViewProducts(Model m)
+	{
+		List<Product> allProducts = productService.getAllProducts();
+		m.addAttribute("products", allProducts);
+		return "admin/products";
+	}
+	
+	@GetMapping("/deleteProduct/{id}")
+	public String deleteProduct(@ModelAttribute Product product,@PathVariable int id,HttpSession session)
+	{
+		Boolean deleteProductById = productService.deleteProductById(id);
+		if(deleteProductById)
+		{
+			session.setAttribute("succMsg", "Product Successfully Deleted");
+		}else
+		{
+			session.setAttribute("errorMsg", "Product Not Deleted ! Something Wrong On Server");
+		}
+		
+		return "redirect:/admin/products";
 	}
 }

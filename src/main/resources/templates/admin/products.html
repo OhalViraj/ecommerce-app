@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::title},~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Category Page</title>
+</head>
+<body>
+	<section>
+		<div class="container-fluid p-4 mt-4">
+			<div class="row">
+
+				<div class="col-md-10 offset-md-1">
+					<div class="card card-sh">
+						<div class="card-header text-center fs-4">View Products</div>
+						<div class="card-body">
+	
+				
+	<th:block th:if="${session.succMsg}">
+	<p class="text-center text-success fs-4">[[${session.succMsg}]]</p>
+	<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+	</th:block>
+	
+	
+	<th:block th:if="${session.errorMsg}">
+	<p class="text-center text-danger fs-4">[[${session.errorMsg}]]</p>
+	<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+	</th:block>
+							
+								<table class="table">
+									<thead>
+										<tr>
+											<th scope="col">SL NO</th>
+											<th scope="col">Image</th>
+											<th scope="col">Title</th>
+											<th scope="col">Category</th>
+											<th scope="col">Price</th>
+											<th scope="col">Stock</th>
+											<th scope="col">Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="p,c:${products}">
+											<th scope="row">[[${c.count}]]</th>
+											<td> <img alt="error" th:src="@{'/img/product_img/'+${p.image}}"  width="60px" height="60px" > </td>
+											<td>[[${p.title}]]</td>
+											<td>[[${p.category}]]</td>
+											<td>[[${p.price}]]</td>
+											<td>[[${p.stock}]]</td>
+											<td>
+											<a  class="btn btn-sm btn-success text-center"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
+											<a th:href="@{'/admin/deleteProduct/'+${p.id}}" class="btn btn-sm btn-danger text-center"> <i class="fa-solid fa-trash"></i> Delete</a>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+						</div>
+
+					</div>
+
+				</div>
+
+
+			</div>
+		</div>
+
+
+	</section>
+</body>
+</html>
