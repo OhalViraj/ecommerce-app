@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -21,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.demo.model.Category;
+import com.demo.model.Product;
 import com.demo.service.CategoryService;
+import com.demo.service.ProductService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -32,18 +35,15 @@ public class AdminController {
 	@Autowired
 	private CategoryService categoryService;
 	
+	@Autowired
+	private ProductService productService;
+	
 	@GetMapping("/")
 	public String indexPage()
 	{
 		return "admin/index";
 	}
 	
-	
-	@GetMapping("/loadAddProduct")
-	public String loadAddProduct()
-	{
-		return "admin/add_product";
-	}
 	
 	
 	@GetMapping("/category")
@@ -147,5 +147,37 @@ public class AdminController {
 		}
 		
 		return "redirect:/admin/loadEditCategory/"+category.getId();
+	}
+	
+
+	
+	@GetMapping("/loadAddProduct")
+	public String loadAddProduct(Model m)
+	{
+		List<Category> categories = categoryService.getAllCategory();
+		m.addAttribute("categories",categories);
+		return "admin/add_product";
+	}
+	
+	@PostMapping("/saveProduct")
+	public String saveProduct(@ModelAttribute Product product,@RequestParam("file") MultipartFile image,HttpSession session) throws IOException
+	{
+		String imageName=image.isEmpty() ? "default.jpg" : image.getOriginalFilename();
+		product.setImage(imageName);
+		Product saveProduct = productService.saveProduct(product);
+		
+		if(!ObjectUtils.isEmpty(saveProduct))
+		{
+			File saveFile = new ClassPathResource("static/img").getFile();
+			Path path = Paths.get(saveFile.getAbsolutePath()+File.separator+"product_img"+File.separator+image.getOriginalFilename());
+			
+			Files.copy(image.getInputStream(), path,StandardCopyOption.REPLACE_EXISTING);
+			session.setAttribute("succMsg", "Product Saves Successfully");
+		}else
+		{
+			session.setAttribute("errorMsg","Something Wrong On Server");
+		}
+		
+		return "redirect:/admin/loadAddProduct";
 	}
 }
