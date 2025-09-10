@@ -3,7 +3,7 @@
 	th:replace="~{base::layout(~{::title},~{::section})}">
 <head>
 <meta charset="UTF-8">
-<title> Add Product Page</title>
+<title>Edit Product Page</title>
 </head>
 <body>
 <section>
@@ -12,7 +12,7 @@
 <div class="col-md-6 offset-md-3">
 <div class="card card-sh">
 <div class="card-header text-center">
-<p>Add Product</p>
+<p>Edit Product</p>
 
 	<th:block th:if="${session.succMsg}">
 		<p class="text-center text-success fs-4">[[${session.succMsg}]]</p>
@@ -31,21 +31,23 @@
 </div>
 
 <div class="card-body">
-<form action="/admin/saveProduct" method="post" enctype="multipart/form-data">
+
+<form action="/admin/updateProduct" method="post" enctype="multipart/form-data">
 <div class="mb-3">
+<input type="hidden" name="id" th:value="${product.id}"> 
 <label>Enter Title</label>
-<input type="text" name="title" class="form-control">
+<input type="text" name="title" class="form-control" th:value="${product.title}">
 </div>
 
 <div class="mb-3">
 <label>Enter Description</label>
-<textarea rows="3" cols="" class="form-control" name="description"></textarea>
+<textarea rows="3" cols="" class="form-control" name="description">[[${product.description}]]</textarea>
 </div>
 
 <div class="mb-3">
 <label>Category</label>
 <select class="form-control" name="category">
-<option>-----Select----</option>
+<option>[[${product.category}]]</option>
 <option th:each="c:${categories}">[[${c.name}]]</option>
 
 </select>
@@ -53,13 +55,13 @@
 
 <div class="mb-3">
 <label>Enter price</label>
-<input type="number" name="price" class="form-control">
+<input type="number" name="price" class="form-control" th:value="${product.price}">
 </div>
 
 <div class="row">
 <div class="col mb-3">
 <label>Enter Stock</label>
-<input type="text" name="stock" class="form-control">
+<input type="text" name="stock" class="form-control" th:value="${product.stock}">
 
 </div>
 
@@ -68,10 +70,14 @@
 <input type="file" name="file" class="form-control">
 
 </div>
+<div class="mb-3 text-center">
+<img alt="error" th:src="@{'/img/product_img/'+${product.image}}" width="50px" height="100px">
 
 </div>
 
-<button class="btn btn-primary col-12">Submit</button>
+</div>
+
+<button class="btn btn-primary col-12">Update</button>
 </form>
 
 
