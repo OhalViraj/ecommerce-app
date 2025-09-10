@@ -9,7 +9,7 @@
 <section>
 <div class="container p-4 mt-4">
 <div class="row">
-<div class="col-md-6 offset-md-3">
+<div class="col-md-8 offset-md-2">
 <div class="card card-sh">
 <div class="card-header text-center">
 <p>Edit Product</p>
@@ -44,7 +44,8 @@
 <textarea rows="3" cols="" class="form-control" name="description">[[${product.description}]]</textarea>
 </div>
 
-<div class="mb-3">
+<div class="row"> 
+<div class="mb-3 col">
 <label>Category</label>
 <select class="form-control" name="category">
 <option>[[${product.category}]]</option>
@@ -53,10 +54,25 @@
 </select>
 </div>
 
-<div class="mb-3">
+<div class="mb-3 col">
 <label>Enter price</label>
 <input type="number" name="price" class="form-control" th:value="${product.price}">
 </div>
+</div>
+
+<div class="row"> 
+<div class="mb-3 col">
+<label>Discount</label>
+<input type="number" name="discount" th:value="${product.discount}">
+</div>
+
+<div class="mb-3 col">
+<label>Discount price</label>
+<input type="number" class="form-control" readonly="readonly" th:value="${product.discountPrice}">
+</div>
+</div>
+
+
 
 <div class="row">
 <div class="col mb-3">

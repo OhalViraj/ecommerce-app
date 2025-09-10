@@ -27,23 +27,17 @@ public class Product {
 	
 	private String image;
 
+	private int discount;
+	
+	private Double discountPrice;
+	
 	public Product() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Product(int id, String title, String description, String category, Double price, int stock, String image) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.description = description;
-		this.category = category;
-		this.price = price;
-		this.stock = stock;
-		this.image = image;
-	}
-
-	public Product(String title, String description, String category, Double price, int stock, String image) {
+	public Product(String title, String description, String category, Double price, int stock, String image,
+			int discount, Double discountPrice) {
 		super();
 		this.title = title;
 		this.description = description;
@@ -51,6 +45,8 @@ public class Product {
 		this.price = price;
 		this.stock = stock;
 		this.image = image;
+		this.discount = discount;
+		this.discountPrice = discountPrice;
 	}
 
 	public int getId() {
@@ -109,11 +105,28 @@ public class Product {
 		this.image = image;
 	}
 
+	public int getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(int discount) {
+		this.discount = discount;
+	}
+
+	public Double getDiscountPrice() {
+		return discountPrice;
+	}
+
+	public void setDiscountPrice(Double discountPrice) {
+		this.discountPrice = discountPrice;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", title=" + title + ", description=" + description + ", category=" + category
-				+ ", price=" + price + ", stock=" + stock + ", image=" + image + "]";
+				+ ", price=" + price + ", stock=" + stock + ", image=" + image + ", discount=" + discount
+				+ ", discountPrice=" + discountPrice + "]";
 	}
-	
+
 	
 }

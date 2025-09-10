@@ -171,6 +171,8 @@ public class AdminController {
 	{
 		String imageName=image.isEmpty() ? "default.jpg" : image.getOriginalFilename();
 		product.setImage(imageName);
+		product.setDiscount(0);
+		product.setDiscountPrice(product.getPrice());
 		Product saveProduct = productService.saveProduct(product);
 		
 		if(!ObjectUtils.isEmpty(saveProduct))
@@ -223,6 +225,14 @@ public class AdminController {
 	@PostMapping("/updateProduct")
 	public String updateProduct(@ModelAttribute Product product,HttpSession session,@RequestParam("file") MultipartFile image)
 	{
+		if(product.getDiscount()<0 || product.getDiscount()>100)
+		{
+			session.setAttribute("errorMsg", "Invalid Discount");
+		}
+		else
+		{
+			
+	
 		
 		Product updateProduct = productService.updateProduct(product, image);
 		
@@ -233,7 +243,8 @@ public class AdminController {
 			{
 				session.setAttribute("errorMsg", "Something Wrong On Server");
 			}
-			
+		}
+		
 		return "redirect:/admin/editProduct/"+product.getId();
 	}
 }
