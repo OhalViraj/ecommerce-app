@@ -90,10 +90,10 @@ public class ProductServiceImpl implements ProductService{
 				}
 				
 			}
-			
+			return product;
 		}
-		return updateProduct;
-	//	return null;
+	//	return updateProduct;
+		return null;
 	}
 		
 }
