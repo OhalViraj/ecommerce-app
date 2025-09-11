@@ -7,6 +7,84 @@
 <title>Product Page</title>
 </head>
 <body>
+
+	<section>
+		<div class="container-fluid bg-primary p-5 mt-5 ">
+			<div class="row">
+				<div class="col-md-8 offset-md-2">
+					<form>
+						<div class="input-group">
+							<input type="text" class="form-control" name="ch">
+							<button class="btn btn-light text-dark ms-3 col-md-2">
+								<i class="fa-solid fa-magnifying-glass"></i> Search
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+
+		</div>
+
+
+		<div class="container-fluid mt-1">
+			<div class="row">
+
+				<div class="col-md-2 p-0">
+
+					<div class="card shadow-sm p-0 mb-5 bg-body-tertiary rounded">
+						<div class="card-body">
+							<div class="list-group">
+								<p class="fs-5">Category</p>
+								<a href="#"
+								class="list-group-item list-group-item-action"
+									aria-current="true"> All </a> <a th:each="c:${categories}"
+									
+							class="list-group-item list-group-item-action">[[${c.name}]]</a>
+							
+							
+							
+							
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-10 ">
+					<div class="card shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+						<div class="card-body">
+							<p class="fs-3 text-center">Products</p>
+						<div class="row ">
+								<div class="col-md-3 " th:each="p:${products}">
+							
+									<div class="card-body card-sh text-center p-2">
+										<img alt="error" th:src="@{'img/product_img/'+${p.image}}" width="100%"
+											height="150px">
+										<p class="fs-4 text-center">[[${p.title}]]</p>
+										<div class="row text-center">
+											<p class="fs-6 fw-bold">
+											<span>&#8377;[[${p.discountPrice}]]</span><br>
+											<span class="text-decoration-line-through text-secondary">	&#8377;[[${p.price}]]</span> <span class="fs-6 text-success">[[${p.discount}]]% off</span>
+											</p>
+											<a href="/viewProduct" class="btn btn-primary col-md-6 offset-md-3">View
+												Details</a>
+										</div>
+									</div>
+								</div>
+						
+							</div>
+							
+							
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</section>
+
+
+<!-- 
+ 
 	<section>
 		<div class="container-fluid bg-primary p-4">
 			<div class="row">
@@ -26,20 +104,24 @@
 		</div>
 
 
-		<div class="container-fluid ">
+		<div class="container-fluid card-sh ">
 			<div class="row">
 				<div class="col-md-2 p-2 mt-1">
-					<div class="list-group">
-						<a href="#" class="list-group-item list-group-item-action active"
-							aria-current="true"> The current link item </a> <a href="#"
-							class="list-group-item list-group-item-action">A second link
-							item</a> <a href="#" class="list-group-item list-group-item-action">A
-							third link item</a> <a href="#"
-							class="list-group-item list-group-item-action">A fourth link
-							item</a> <a href="#"
-							class="list-group-item list-group-item-action disabled"
-							aria-disabled="true">A disabled link item</a>
-					</div>
+				<div class="card-header text-center">
+				
+						<p class="fw-bold"> Categories </p>
+							
+				</div>
+				<div class="card-body p-2 mt-1">
+					<div class="list-group mb-2">
+						
+						
+						<a href="#" th:each="c:${categories}"
+						 class="list-group-item list-group-item-action active "
+							aria-current="true"> [[${c.name}]] </a>
+								
+						</div>
+						</div>
 				</div>
 								
 				
@@ -51,69 +133,21 @@
 							<p class="text-center fs-4">Products</p>
 
 							<div class="row">
-								<div class="col-md-3">
+								<div class="col-md-3" th:each="p:${products}">
 									<div class="card-body text-center">
-										<img alt="error" src="img/product_img/laptop.jpg" width="100%"
+										<img alt="error" th:src="@{'img/product_img/'+${p.image}}" width="100%"
 											height="150px">
-										<p class="fs-4 text-center">Laptop</p>
+										<p class="fs-4 text-center">[[${p.title}]]</p>
 										<div class="row text-center">
 											<p class="fs-6 fw-bold">
-												&#8377;500 <span class="fs-6 text-success">20% off</span>
+												&#8377;[[${p.price}]] <span class="fs-6 text-success">[[${p.discount}]]% off</span>
 											</p>
 											<a href="/viewProduct" class="btn btn-primary col-md-6 offset-md-3">View
 												Details</a>
 										</div>
 									</div>
 								</div>
-								
-								<!-- ToDo: Remove After Backend Implements -->
-								
-																<div class="col-md-3">
-									<div class="card-body text-center">
-										<img alt="error" src="img/product_img/laptop.jpg" width="100%"
-											height="150px">
-										<p class="fs-4 text-center">Laptop</p>
-										<div class="row text-center">
-											<p class="fs-6 fw-bold">
-												&#8377;500 <span class="fs-6 text-success">20% off</span>
-											</p>
-											<a href="/viewProduct" class="btn btn-primary col-md-6 offset-md-3">View
-												Details</a>
-										</div>
-									</div>
-								</div>
-								
-																<div class="col-md-3">
-									<div class="card-body text-center">
-										<img alt="error" src="img/product_img/laptop.jpg" width="100%"
-											height="150px">
-										<p class="fs-4 text-center">Laptop</p>
-										<div class="row text-center">
-											<p class="fs-6 fw-bold">
-												&#8377;500 <span class="fs-6 text-success">20% off</span>
-											</p>
-											<a href="/viewProduct" class="btn btn-primary col-md-6 offset-md-3">View
-												Details</a>
-										</div>
-									</div>
-								</div>
-								
-																<div class="col-md-3">
-									<div class="card-body text-center">
-										<img alt="error" src="img/product_img/laptop.jpg" width="100%"
-											height="150px">
-										<p class="fs-4 text-center">Laptop</p>
-										<div class="row text-center">
-											<p class="fs-6 fw-bold">
-												&#8377;500 <span class="fs-6 text-success">20% off</span>
-											</p>
-											<a href="/viewProduct" class="btn btn-primary col-md-6 offset-md-3">View
-												Details</a>
-										</div>
-									</div>
-								</div>
-
-
+						
 							</div>
 						</div>
 					</div>
@@ -126,7 +160,7 @@
 </div>
 	</section>
 
-
+ -->
 
 </body>
 </html>

@@ -6,107 +6,129 @@
 <title>Edit Product Page</title>
 </head>
 <body>
-<section>
-<div class="container p-4 mt-4">
-<div class="row">
-<div class="col-md-8 offset-md-2">
-<div class="card card-sh">
-<div class="card-header text-center">
-<p>Edit Product</p>
+	<section>
+		<div class="container p-4 mt-4">
+			<div class="row">
+				<div class="col-md-8 offset-md-2">
+					<div class="card card-sh">
+						<div class="card-header text-center">
+							<p>Edit Product</p>
 
-	<th:block th:if="${session.succMsg}">
-		<p class="text-center text-success fs-4">[[${session.succMsg}]]</p>
-	<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
-	
-	</th:block>
-	
-	
-	<th:block th:if="${session.errorMsg}">
-		<p class="text-center text-danger fs-4">[[${session.errorMsg}]]</p>
-	<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
-	
-	</th:block>
-	
+							<th:block th:if="${session.succMsg}">
+								<p class="text-center text-success fs-4">[[${session.succMsg}]]</p>
+								<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
 
-</div>
-
-<div class="card-body">
-
-<form action="/admin/updateProduct" method="post" enctype="multipart/form-data">
-<div class="mb-3">
-<input type="hidden" name="id" th:value="${product.id}"> 
-<label>Enter Title</label>
-<input type="text" name="title" class="form-control" th:value="${product.title}">
-</div>
-
-<div class="mb-3">
-<label>Enter Description</label>
-<textarea rows="3" cols="" class="form-control" name="description">[[${product.description}]]</textarea>
-</div>
-
-<div class="row"> 
-<div class="mb-3 col">
-<label>Category</label>
-<select class="form-control" name="category">
-<option>[[${product.category}]]</option>
-<option th:each="c:${categories}">[[${c.name}]]</option>
-
-</select>
-</div>
-
-<div class="mb-3 col">
-<label>Enter price</label>
-<input type="number" name="price" class="form-control" th:value="${product.price}">
-</div>
-</div>
-
-<div class="row"> 
-<div class="mb-3 col">
-<label>Discount</label>
-<input type="number" name="discount" th:value="${product.discount}">
-</div>
-
-<div class="mb-3 col">
-<label>Discount price</label>
-<input type="number" class="form-control" readonly="readonly" th:value="${product.discountPrice}">
-</div>
-</div>
+							</th:block>
 
 
+							<th:block th:if="${session.errorMsg}">
+								<p class="text-center text-danger fs-4">[[${session.errorMsg}]]</p>
+								<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
 
-<div class="row">
-<div class="col mb-3">
-<label>Enter Stock</label>
-<input type="text" name="stock" class="form-control" th:value="${product.stock}">
-
-</div>
-
-<div class="col mb-3">
-<label>Upload Image </label>
-<input type="file" name="file" class="form-control">
-
-</div>
-<div class="mb-3 text-center">
-<img alt="error" th:src="@{'/img/product_img/'+${product.image}}" width="100px" height="100px">
-
-</div>
-
-</div>
-
-<button class="btn btn-primary col-12">Update</button>
-</form>
+							</th:block>
 
 
-</div>
-</div>
+						</div>
 
-</div>
+						<div class="card-body">
 
-</div>
+							<form action="/admin/updateProduct" method="post"
+								enctype="multipart/form-data">
+								<div class="mb-3">
+									<input type="hidden" name="id" th:value="${product.id}">
+									<label>Enter Title</label> <input type="text" name="title"
+										class="form-control" th:value="${product.title}">
+								</div>
 
-</div>
+								<div class="mb-3">
+									<label>Enter Description</label>
+									<textarea rows="3" cols="" class="form-control"
+										name="description">[[${product.description}]]</textarea>
+								</div>
+
+								<div class="row">
+									<div class="mb-3 col">
+										<label>Category</label> <select class="form-control"
+											name="category">
+											<option>[[${product.category}]]</option>
+											<option th:each="c:${categories}">[[${c.name}]]</option>
+
+										</select>
+									</div>
+
+									<div class="mb-3 col">
+										<label>Enter price</label> <input type="number" name="price"
+											class="form-control" th:value="${product.price}">
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="mb-3 col">
+										<label>Discount</label> <input type="number" name="discount"
+											th:value="${product.discount}">
+									</div>
+
+									<div class="mb-3 col">
+										<label>Discount price</label> <input type="number"
+											class="form-control" readonly="readonly"
+											th:value="${product.discountPrice}">
+									</div>
+								</div>
+
+								
+								<div class="mb-3">
+									<label>Status</label>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" th:checked="${product.isActive==true}" name="isActive"
+											id="radioDefault1"  value="true"> <label
+											class="form-check-label" for="radioDefault1">Active </label>
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="isActive" th:checked="${product.isActive==false}" 
+											id="radioDefault2" value="false"> <label
+											class="form-check-label" for="radioDefault2">
+											InActive </label>
+									</div>
+
+								</div>
 
 
-</section>
+
+								<div class="row">
+									<div class="col mb-3">
+										<label>Enter Stock</label> <input type="text" name="stock"
+											class="form-control" th:value="${product.stock}">
+
+									</div>
+
+									<div class="col mb-3">
+										<label>Upload Image </label> <input type="file" name="file"
+											class="form-control">
+
+									</div>
+									<div class="mb-3 text-center">
+										<img alt="error"
+											th:src="@{'/img/product_img/'+${product.image}}"
+											width="100px" height="100px">
+
+									</div>
+
+								</div>
+
+								<button class="btn btn-primary col-12">Update</button>
+							</form>
+
+
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+
+	</section>
 </body>
 </html>
