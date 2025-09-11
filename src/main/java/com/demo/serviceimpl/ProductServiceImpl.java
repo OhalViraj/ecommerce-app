@@ -71,6 +71,8 @@ public class ProductServiceImpl implements ProductService{
 		dbProduct.setStock(product.getStock());
 		dbProduct.setImage(imageName);
 		dbProduct.setDiscount(product.getDiscount());
+		dbProduct.setIsActive(product.getIsActive());
+		
 		
 		Double discount=product.getPrice()*(product.getDiscount()/100.0);
 		Double discountPrice=product.getPrice()-discount;
@@ -101,5 +103,22 @@ public class ProductServiceImpl implements ProductService{
 	//	return updateProduct;
 		return null;
 	}
+
+	@Override
+	public List<Product> getAllActiveProducts(String category) {
+		// TODO Auto-generated method stub
+		List<Product> products = null;
+		if(ObjectUtils.isEmpty(category))
+		{
+			products=productRepo.findByIsActiveTrue();
+			
+		}else
+		{
+			products=productRepo.findByCategory(category);
+		}
 		
+	return products;
+	}
+		
+	
 }

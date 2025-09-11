@@ -31,13 +31,15 @@ public class Product {
 	
 	private Double discountPrice;
 	
+	private Boolean isActive; 
+	
 	public Product() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	public Product(String title, String description, String category, Double price, int stock, String image,
-			int discount, Double discountPrice) {
+			int discount, Double discountPrice, Boolean isActive) {
 		super();
 		this.title = title;
 		this.description = description;
@@ -47,6 +49,7 @@ public class Product {
 		this.image = image;
 		this.discount = discount;
 		this.discountPrice = discountPrice;
+		this.isActive = isActive;
 	}
 
 	public int getId() {
@@ -121,12 +124,20 @@ public class Product {
 		this.discountPrice = discountPrice;
 	}
 
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", title=" + title + ", description=" + description + ", category=" + category
 				+ ", price=" + price + ", stock=" + stock + ", image=" + image + ", discount=" + discount
-				+ ", discountPrice=" + discountPrice + "]";
+				+ ", discountPrice=" + discountPrice + ", isActive=" + isActive + "]";
 	}
-
+	
 	
 }
