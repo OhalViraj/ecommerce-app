@@ -4,14 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
-
 public class UserDtls {
 
 	@Id
@@ -35,6 +29,8 @@ public class UserDtls {
 	private String password;
 	
 	private String profileImage;
+	
+	private String role;
 
 	public UserDtls() {
 		super();
@@ -42,7 +38,7 @@ public class UserDtls {
 	}
 
 	public UserDtls(String name, String mobileNumber, String email, String address, String city, String state,
-			String pincode, String password, String profileImage) {
+			String pincode, String password, String profileImage, String role) {
 		super();
 		this.name = name;
 		this.mobileNumber = mobileNumber;
@@ -53,6 +49,7 @@ public class UserDtls {
 		this.pincode = pincode;
 		this.password = password;
 		this.profileImage = profileImage;
+		this.role = role;
 	}
 
 	public int getId() {
@@ -135,12 +132,21 @@ public class UserDtls {
 		this.profileImage = profileImage;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	@Override
 	public String toString() {
 		return "UserDtls [id=" + id + ", name=" + name + ", mobileNumber=" + mobileNumber + ", email=" + email
 				+ ", address=" + address + ", city=" + city + ", state=" + state + ", pincode=" + pincode
-				+ ", password=" + password + ", profileImage=" + profileImage + "]";
+				+ ", password=" + password + ", profileImage=" + profileImage + ", role=" + role + "]";
 	}
+
 	
-	
+
 }
