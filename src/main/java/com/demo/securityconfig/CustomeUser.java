@@ -47,20 +47,21 @@ public class CustomeUser implements UserDetails{
 	@Override
 	public boolean isAccountNonLocked() {
 		// TODO Auto-generated method stub
-		return true;
+		return UserDetails.super.isAccountNonLocked();
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
 		// TODO Auto-generated method stub
-		return true;
+		return UserDetails.super.isCredentialsNonExpired();
 	}
 
 	@Override
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
-		return true;
+		return userDtls.getIsEnable();
 	}
 
+	
 	
 }

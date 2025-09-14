@@ -269,4 +269,30 @@ public class AdminController {
 		
 		return "redirect:/admin/editProduct/"+product.getId();
 	}
+	
+	@GetMapping("/users")
+	public String getAllUsers(Model m)
+	{
+		List<UserDtls> users = userDtlsService.getUsers("ROLE_USER");
+		m.addAttribute("users", users);
+		return "/admin/users";
+	}
+	
+	@GetMapping("/updateStatus")
+	public String updateUserAccountStatus(@RequestParam Boolean status,@RequestParam Integer id,HttpSession session)
+	{
+		Boolean f=userDtlsService.updateAccountStatus(id,status);
+		if(f)
+		{
+			session.setAttribute("succMsg", "Account status is updated");
+		}
+		else
+		{
+			session.setAttribute("errMsg", "Something Wrong On Server");
+		}
+		
+		
+		return "redirect:/admin/users";
+		
+	}
 }

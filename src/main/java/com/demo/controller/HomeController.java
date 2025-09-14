@@ -54,6 +54,7 @@ public class HomeController {
 			UserDtls userByDtls= userDtlsService.getUserByEmail(email);
 			m.addAttribute("user",userByDtls);
 		}
+		
 		List<Category> allActiveCategory = categoryService.getAllActiveCategory();
 		m.addAttribute("categorys",allActiveCategory);
 	}

@@ -31,6 +31,8 @@ public class UserDtls {
 	private String profileImage;
 	
 	private String role;
+	
+	private Boolean isEnable;
 
 	public UserDtls() {
 		super();
@@ -38,7 +40,7 @@ public class UserDtls {
 	}
 
 	public UserDtls(String name, String mobileNumber, String email, String address, String city, String state,
-			String pincode, String password, String profileImage, String role) {
+			String pincode, String password, String profileImage, String role, Boolean isEnable) {
 		super();
 		this.name = name;
 		this.mobileNumber = mobileNumber;
@@ -50,6 +52,7 @@ public class UserDtls {
 		this.password = password;
 		this.profileImage = profileImage;
 		this.role = role;
+		this.isEnable = isEnable;
 	}
 
 	public int getId() {
@@ -140,13 +143,23 @@ public class UserDtls {
 		this.role = role;
 	}
 
+	public Boolean getIsEnable() {
+		return isEnable;
+	}
+
+	public void setIsEnable(Boolean isEnable) {
+		this.isEnable = isEnable;
+	}
+
 	@Override
 	public String toString() {
 		return "UserDtls [id=" + id + ", name=" + name + ", mobileNumber=" + mobileNumber + ", email=" + email
 				+ ", address=" + address + ", city=" + city + ", state=" + state + ", pincode=" + pincode
-				+ ", password=" + password + ", profileImage=" + profileImage + ", role=" + role + "]";
+				+ ", password=" + password + ", profileImage=" + profileImage + ", role=" + role + ", isEnable="
+				+ isEnable + "]";
 	}
 
 	
+		
 
 }
