@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.demo.model.Category;
 import com.demo.model.Product;
+import com.demo.model.UserDtls;
 import com.demo.repository.ProductRepo;
 import com.demo.service.CategoryService;
 import com.demo.service.ProductService;
+import com.demo.service.UserDtlsService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -40,6 +43,25 @@ public class AdminController {
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private UserDtlsService userDtlsService;
+
+	@ModelAttribute
+	public void getUserDetails(Principal p,Model m)
+	{
+		if(p!=null)
+		{
+			String email=p.getName();
+			UserDtls userByDtls= userDtlsService.getUserByEmail(email);
+			m.addAttribute("user",userByDtls);
+		}
+
+		List<Category> allActiveCategory = categoryService.getAllActiveCategory();
+		m.addAttribute("categorys",allActiveCategory);
+	
+	}
+
 
     AdminController(ProductRepo productRepo) {
         this.productRepo = productRepo;

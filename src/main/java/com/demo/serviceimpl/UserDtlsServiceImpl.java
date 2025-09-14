@@ -27,6 +27,13 @@ public class UserDtlsServiceImpl implements UserDtlsService{
 		return saveUser;
 	}
 
+	@Override
+	public UserDtls getUserByEmail(String email) {
+		// TODO Auto-generated method stub
+		UserDtls  userbyEmail= userDtlsRepo.findByEmail(email);
+		return userbyEmail;
+	}
+
 	
 	
 	
