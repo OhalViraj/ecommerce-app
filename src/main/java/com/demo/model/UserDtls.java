@@ -1,5 +1,7 @@
 package com.demo.model;
 
+import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,14 +35,24 @@ public class UserDtls {
 	private String role;
 	
 	private Boolean isEnable;
+	
+	private Boolean accountNonLocked;
+	
 
+	private int failedAttempt;
+	
+	private Date lockTime;
+	
+	
 	public UserDtls() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
+
 	public UserDtls(String name, String mobileNumber, String email, String address, String city, String state,
-			String pincode, String password, String profileImage, String role, Boolean isEnable) {
+			String pincode, String password, String profileImage, String role, Boolean isEnable,
+			Boolean accountNonLocked, int failedAttempt, Date lockTime) {
 		super();
 		this.name = name;
 		this.mobileNumber = mobileNumber;
@@ -53,113 +65,170 @@ public class UserDtls {
 		this.profileImage = profileImage;
 		this.role = role;
 		this.isEnable = isEnable;
+		this.accountNonLocked = accountNonLocked;
+		this.failedAttempt = failedAttempt;
+		this.lockTime = lockTime;
 	}
+
 
 	public int getId() {
 		return id;
 	}
 
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 
 	public String getName() {
 		return name;
 	}
 
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 
 	public String getMobileNumber() {
 		return mobileNumber;
 	}
 
+
 	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
+
 
 	public String getEmail() {
 		return email;
 	}
 
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 
 	public String getAddress() {
 		return address;
 	}
 
+
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
 
 	public String getCity() {
 		return city;
 	}
 
+
 	public void setCity(String city) {
 		this.city = city;
 	}
+
 
 	public String getState() {
 		return state;
 	}
 
+
 	public void setState(String state) {
 		this.state = state;
 	}
+
 
 	public String getPincode() {
 		return pincode;
 	}
 
+
 	public void setPincode(String pincode) {
 		this.pincode = pincode;
 	}
+
 
 	public String getPassword() {
 		return password;
 	}
 
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 
 	public String getProfileImage() {
 		return profileImage;
 	}
 
+
 	public void setProfileImage(String profileImage) {
 		this.profileImage = profileImage;
 	}
+
 
 	public String getRole() {
 		return role;
 	}
 
+
 	public void setRole(String role) {
 		this.role = role;
 	}
+
 
 	public Boolean getIsEnable() {
 		return isEnable;
 	}
 
+
 	public void setIsEnable(Boolean isEnable) {
 		this.isEnable = isEnable;
 	}
+
+
+	public Boolean getAccountNonLocked() {
+		return accountNonLocked;
+	}
+
+
+	public void setAccountNonLocked(Boolean accountNonLocked) {
+		this.accountNonLocked = accountNonLocked;
+	}
+
+
+	public int getFailedAttempt() {
+		return failedAttempt;
+	}
+
+
+	public void setFailedAttempt(int failedAttempt) {
+		this.failedAttempt = failedAttempt;
+	}
+
+
+	public Date getLockTime() {
+		return lockTime;
+	}
+
+
+	public void setLockTime(Date lockTime) {
+		this.lockTime = lockTime;
+	}
+
 
 	@Override
 	public String toString() {
 		return "UserDtls [id=" + id + ", name=" + name + ", mobileNumber=" + mobileNumber + ", email=" + email
 				+ ", address=" + address + ", city=" + city + ", state=" + state + ", pincode=" + pincode
 				+ ", password=" + password + ", profileImage=" + profileImage + ", role=" + role + ", isEnable="
-				+ isEnable + "]";
+				+ isEnable + ", accountNonLocked=" + accountNonLocked + ", failedAttempt=" + failedAttempt
+				+ ", lockTime=" + lockTime + "]";
 	}
 
 	
-		
-
 }
