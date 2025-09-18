@@ -2,16 +2,19 @@ package com.demo.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
@@ -29,7 +32,11 @@ import com.demo.repository.ProductRepo;
 import com.demo.service.CategoryService;
 import com.demo.service.ProductService;
 import com.demo.service.UserDtlsService;
+import com.demo.util.CommonUtil;
 
+import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -45,6 +52,12 @@ public class HomeController {
 	@Autowired
 	private UserDtlsService userDtlsService;
 
+	@Autowired
+	private CommonUtil commonUtil;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
 	@ModelAttribute
 	public void getUserDetails(Principal p,Model m)
 	{
@@ -108,10 +121,21 @@ public class HomeController {
 		{
 			if(!file.isEmpty())
 			{
+				/*
+				 * File saveFile = new ClassPathResource("static/img").getFile(); Path path =
+				 * Paths.get(saveFile.getAbsolutePath()+File.separator+"profile_img"+File.
+				 * separator +file.getOriginalFilename());
+				 * Files.copy(file.getInputStream(),path,StandardCopyOption.REPLACE_EXISTING);
+				 */
 				File saveFile = new ClassPathResource("static/img").getFile();
-				Path path = Paths.get(saveFile.getAbsolutePath()+File.separator+"profile_img"+File.separator
-						+file.getOriginalFilename());
-				Files.copy(file.getInputStream(),path,StandardCopyOption.REPLACE_EXISTING);
+				File profileDir = new File(saveFile, "profile_img");
+				if (!profileDir.exists()) {
+				    profileDir.mkdirs();
+				}
+				Path path = Paths.get(profileDir.getAbsolutePath(), file.getOriginalFilename());
+				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+
+				
 				session.setAttribute("succMsg", "File Saved Successfully");
 			
 			}
@@ -122,5 +146,89 @@ public class HomeController {
 		}
 		
 		return "redirect:/register";
+	}
+	
+	
+	//Forget Password
+	
+	@GetMapping("/forgetPassword")
+	public String showForgetPassword()
+	{
+		return "forget_password";
+	}
+
+	@PostMapping("/forgetPass")
+	public String processForgetPassword(@RequestParam String email,HttpSession session,HttpServletRequest request) throws UnsupportedEncodingException, MessagingException
+	{
+		UserDtls userByEmail = userDtlsService.getUserByEmail(email);
+		
+		if(ObjectUtils.isEmpty(userByEmail))
+		{
+			session.setAttribute("errorMsg","Invalid Email");
+		}
+		else
+		{
+			
+			String resetToken = UUID.randomUUID().toString();
+			userDtlsService.updateUserResetToken(email,resetToken);
+		
+			//Generate Url : http://localhost:8080/resetPassword?token=fguvvvcvv
+			
+			String url=CommonUtil.generateUrl(request)+"/resetPassword?token="+resetToken;
+			
+			Boolean sendMail = commonUtil.sendMail(url,email);
+			if(sendMail)
+			{
+				session.setAttribute("succMsg","Please Check Your Mail.. Password Reset Link Sent");
+				
+			}else
+			{
+				session.setAttribute("errorMsg","Something Wrong On Server");
+				
+			}
+		}
+		return "redirect:/forgetPassword";
+	}
+
+	
+	
+	
+
+	@GetMapping("/resetPassword")
+	public String showResetPassword(@RequestParam String token,HttpSession session,Model m)
+	{
+		UserDtls userByToken = userDtlsService.getUserByToken(token);
+		if(ObjectUtils.isEmpty(userByToken))
+		{
+			m.addAttribute("msg","Your Link is Invalid");
+			
+		 	return "message";
+		}
+		
+		m.addAttribute("token",token);
+		return "reset_password";
+	}
+	
+	@PostMapping("/changePassword")
+	public String changePassword(@RequestParam String token,Model m,@RequestParam String password,HttpSession session)
+	{
+		UserDtls userByToken = userDtlsService.getUserByToken(token);
+		if(ObjectUtils.isEmpty(userByToken))
+		{
+			m.addAttribute("msg","Your Link is Invalid");
+		 	return "message";
+		}else
+		{
+			userByToken.setPassword(passwordEncoder.encode(password));
+			userByToken.setResetToken(null);
+			userDtlsService.updateUserDtls(userByToken);
+			session.setAttribute("succMsg","Password Change Succesfully");
+			
+			m.addAttribute("msg","Password Change Succesfully");
+			
+			return "message";
+		}
+		
+		
 	}
 }

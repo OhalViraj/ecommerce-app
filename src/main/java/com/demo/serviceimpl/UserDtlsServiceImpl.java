@@ -111,6 +111,30 @@ public class UserDtlsServiceImpl implements UserDtlsService{
 		
 	}
 
+	@Override
+	public void updateUserResetToken(String email, String resetToken) {
+		// TODO Auto-generated method stub
+		
+		UserDtls findByEmail = userDtlsRepo.findByEmail(email);
+		findByEmail.setResetToken(resetToken);
+		userDtlsRepo.save(findByEmail);
+	}
+
+	@Override
+	public UserDtls getUserByToken(String token) {
+		// TODO Auto-generated method stub
+		UserDtls byResetToken = userDtlsRepo.findByResetToken(token);
+		
+		return byResetToken;
+	}
+
+	@Override
+	public UserDtls updateUserDtls(UserDtls user) {
+		// TODO Auto-generated method stub
+		UserDtls updateUser = userDtlsRepo.save(user);
+		return updateUser;
+	}
+
 	 
 	
 	

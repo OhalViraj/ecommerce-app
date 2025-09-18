@@ -43,6 +43,8 @@ public class UserDtls {
 	
 	private Date lockTime;
 	
+	private String resetToken;
+	
 	
 	public UserDtls() {
 		super();
@@ -52,7 +54,7 @@ public class UserDtls {
 
 	public UserDtls(String name, String mobileNumber, String email, String address, String city, String state,
 			String pincode, String password, String profileImage, String role, Boolean isEnable,
-			Boolean accountNonLocked, int failedAttempt, Date lockTime) {
+			Boolean accountNonLocked, int failedAttempt, Date lockTime, String resetToken) {
 		super();
 		this.name = name;
 		this.mobileNumber = mobileNumber;
@@ -68,6 +70,7 @@ public class UserDtls {
 		this.accountNonLocked = accountNonLocked;
 		this.failedAttempt = failedAttempt;
 		this.lockTime = lockTime;
+		this.resetToken = resetToken;
 	}
 
 
@@ -221,14 +224,25 @@ public class UserDtls {
 	}
 
 
+	public String getResetToken() {
+		return resetToken;
+	}
+
+
+	public void setResetToken(String resetToken) {
+		this.resetToken = resetToken;
+	}
+
+
 	@Override
 	public String toString() {
 		return "UserDtls [id=" + id + ", name=" + name + ", mobileNumber=" + mobileNumber + ", email=" + email
 				+ ", address=" + address + ", city=" + city + ", state=" + state + ", pincode=" + pincode
 				+ ", password=" + password + ", profileImage=" + profileImage + ", role=" + role + ", isEnable="
 				+ isEnable + ", accountNonLocked=" + accountNonLocked + ", failedAttempt=" + failedAttempt
-				+ ", lockTime=" + lockTime + "]";
+				+ ", lockTime=" + lockTime + ", resetToken=" + resetToken + "]";
 	}
+
 
 	
 }
